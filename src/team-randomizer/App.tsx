@@ -1,8 +1,6 @@
-
 import React, { useState, useRef } from 'react';
 import type { Team, Player } from './types';
 import NameInput from './components/NameInput';
-import TeamConfig from './components/TeamConfig';
 import TeamDisplay from './components/TeamDisplay';
 import { AlertTriangle, CheckCircle } from './components/Icons';
 
@@ -10,7 +8,6 @@ const App: React.FC = () => {
   const [names, setNames] = useState<Player[]>([]);
   const [currentName, setCurrentName] = useState<string>('');
   const [currentSkill, setCurrentSkill] = useState<string>('50');
-  const [numTeams, setNumTeams] = useState<string>('2');
   const [teams, setTeams] = useState<Team[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -62,23 +59,11 @@ const App: React.FC = () => {
       return;
     }
     
-    const numberOfTeams = parseInt(numTeams, 10);
-    if (isNaN(numberOfTeams) || numberOfTeams < 2) {
-      setError('Number of teams must be at least 2.');
-      return;
-    }
-    if (numberOfTeams > effectivePlayers.length) {
-      setError('The number of teams cannot exceed the number of names.');
-      return;
-    }
+    const numberOfTeams = 2;
 
     let newTeams: Team[] = [];
 
     if (generationMethod === 'skill') {
-        if (numberOfTeams !== 2) {
-            setError('Skill-based generation only works for exactly 2 teams.');
-            return;
-        }
         const sortedPlayers = [...effectivePlayers].sort((a, b) => b.skill - a.skill);
         const team1: Player[] = [];
         const team2: Player[] = [];
@@ -174,7 +159,7 @@ const App: React.FC = () => {
       });
     });
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-utf-8;' });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
@@ -185,29 +170,18 @@ const App: React.FC = () => {
     setSuccess('Teams exported successfully.');
   };
 
-  const handleGenerationMethodChange = (method: 'random' | 'skill') => {
-    setGenerationMethod(method);
-    if (method === 'skill') {
-      setNumTeams('2');
-    }
-    clearMessages();
-  };
-
   return (
     <div className="min-h-screen bg-slate-900 font-sans p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         <header className="text-center mb-8">
-          <h1 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-500">
-            Team Randomizer Pro
-          </h1>
-          <p className="mt-2 text-lg text-slate-400">
-            Effortlessly create fair and random teams.
-          </p>
+          <h2 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-500">
+            Team Randomizer
+          </h2>
         </header>
 
         <main className="grid grid-cols-1 lg:grid-cols-2 lg:gap-8">
           <div className="bg-slate-800/50 p-6 rounded-lg shadow-lg border border-slate-700">
-            <h2 className="text-2xl font-semibold text-sky-300 mb-4 border-b border-slate-600 pb-2">
+            <h2 className="text-xl font-semibold text-sky-300 mb-4 border-b border-slate-600 pb-2">
               1. Setup
             </h2>
 
@@ -233,13 +207,38 @@ const App: React.FC = () => {
               accept=".txt,.csv"
             />
             
-            <TeamConfig
-              numTeams={numTeams}
-              onNumTeamsChange={(e) => { setNumTeams(e.target.value); clearMessages(); }}
-              onRandomize={handleRandomize}
-              generationMethod={generationMethod}
-              onGenerationMethodChange={handleGenerationMethodChange}
-            />
+            <div className="mt-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">
+                    Generation Method
+                </label>
+                <div className="flex w-full rounded-md bg-slate-900 border border-slate-600 p-1 space-x-1">
+                    <button 
+                        onClick={() => setGenerationMethod('random')}
+                        className={`w-1/2 p-2 rounded-md text-sm font-semibold transition-colors duration-200 ${generationMethod === 'random' ? 'bg-sky-600 text-white shadow' : 'text-slate-300 hover:bg-slate-700'}`}
+                        aria-pressed={generationMethod === 'random'}
+                    >
+                        Random
+                    </button>
+                    <button 
+                        onClick={() => setGenerationMethod('skill')}
+                        className={`w-1/2 p-2 rounded-md text-sm font-semibold transition-colors duration-200 ${generationMethod === 'skill' ? 'bg-sky-600 text-white shadow' : 'text-slate-300 hover:bg-slate-700'}`}
+                        aria-pressed={generationMethod === 'skill'}
+                    >
+                        Skill-Based
+                    </button>
+                </div>
+              </div>
+              <button
+                onClick={handleRandomize}
+                className="w-full flex justify-center items-center gap-2 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white font-bold py-3 px-4 rounded-md shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-sky-500/50"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 16v-2m8-8h2M4 12H2m15.364 6.364l1.414 1.414M4.222 4.222l1.414 1.414m12.728 0l-1.414 1.414M5.636 18.364l-1.414 1.414M12 16a4 4 0 110-8 4 4 0 010 8z" />
+                </svg>
+                Generate Teams
+              </button>
+            </div>
             
             {error && (
               <div className="mt-4 p-3 rounded-md bg-red-900/50 text-red-300 border border-red-700 flex items-center gap-3">
