@@ -1,0 +1,5 @@
+{
+  "name": "Team Randomizer Pro",
+  "description": "A sleek and powerful web app to randomize a list of names into equal-sized teams. Features include importing names from files and exporting generated teams to CSV for easy sharing and record-keeping.",
+  "requestFramePermissions": []
+}
