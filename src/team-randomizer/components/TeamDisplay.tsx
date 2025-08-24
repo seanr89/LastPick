@@ -28,7 +28,7 @@ const TeamDisplay: React.FC<TeamDisplayProps> = ({ teams, onExport }) => {
           <p className="mt-1 text-sm text-slate-400">Complete the setup and click "Generate Teams" to see the results here.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
           {teams.map((team, index) => {
             const totalSkill = team.members.reduce((sum, member) => sum + member.skill, 0);
             return (
