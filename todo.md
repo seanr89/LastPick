@@ -1,32 +1,27 @@
-# ✅ Team Randomizer Web App - To-Do List
+# Project TODO List
 
-This document outlines immediate tasks, new features, and potential enhancements for the Team Randomizer web application.
+This document outlines planned features and bug fixes for the Team Randomizer application.
 
----
+## Planned Features
 
-### 1. Immediate Tasks / Bug Fixes
+### User Authentication
+- [ ] Implement user login and registration
+- [ ] Add support for OAuth providers (Google, GitHub)
+- [ ] Create user profile pages
 
-These are items to address in the short term to ensure core functionality and usability.
+### Team Management
+- [ ] Automatically generate teams based on player availability
+- [ ] Allow users to manually adjust teams after generation
+- [ ] Implement a "fairness" algorithm to ensure balanced teams
+- [ ] Add support for different team sizes
 
-* **1.1. Input Validation Refinement:**
-    * Improve real-time validation for "Number of Teams" input to provide instant feedback.
-    * Ensure robust handling of non-numeric or negative inputs for team count.
-* **1.2. Error Message Clarity:**
-    * Enhance all user-facing error messages to be more descriptive and actionable (e.g., "Please enter at least 2 names before randomizing" instead of a generic "Error").
-* **1.3. UI Feedback for Actions:**
-    * Add visual feedback (e.g., temporary success message, button state change) after successful randomization, import, or export.
-* **1.4. Responsive Layout Review:**
-    * Conduct a thorough review of the layout on various mobile devices and tablets to ensure no elements are overlapping or unreadable.
+### Event Management
+- [ ] Allow users to create and schedule events
+- [ ] Enable sharing of events with other users
+- [ ] Send notifications to users about upcoming events
+- [ ] Add a calendar view for upcoming events
 
----
-
-### 2. New Features / Enhancements
-
-These are planned additions to expand the application's capabilities.
-
-* **2.1. Duplicate Name Handling Option:**
-    * Add a checkbox/toggle for users to decide whether to **allow or remove duplicate names** before randomization.
-* **2.2. Customizable Team Names:**
-    * Allow users to **input custom names for teams** (e.g., "Dragons," "Wizards," instead of "Team 1," "Team 2"). If not provided, default to "Team X."
-* **2.3. "Shuffle Teams" Button:**
-    * Add a
+### General Improvements
+- [ ] Improve UI/UX for smaller screens
+- [ ] Add a dark mode option
+- [ ] Refactor codebase to improve performance and maintainability
