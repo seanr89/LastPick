@@ -16,3 +16,10 @@ variable "storage_account_name" {
   type        = string
   default     = "lastpicksa" # Change this to a unique name
 }
+
+variable "subscription_id" {
+  description = "The subscription ID for the Azure account."
+  type        = string
+  sensitive   = true
+  default = "51f8447c-87ad-44cf-b78d-8a869fabe648"
+}

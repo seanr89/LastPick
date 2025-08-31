@@ -10,6 +10,7 @@ terraform {
 
 provider "azurerm" {
   features {}
+  subscription_id = var.subscription_id
 }
 
 resource "azurerm_resource_group" "rg" {
@@ -24,9 +25,10 @@ resource "azurerm_storage_account" "sa" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
   account_kind             = "StorageV2"
+}
 
-  static_website {
-    index_document = "index.html"
-    error_404_document = "index.html"
-  }
+resource "azurerm_storage_account_static_website" "static_website" {
+  storage_account_id = azurerm_storage_account.sa.id
+  index_document = "index.html"
+  error_404_document = "index.html"
 }
