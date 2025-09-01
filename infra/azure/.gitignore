@@ -17,3 +17,5 @@ terraform.rc
 **.tfvars
 **.tfstate
 **.tfstate.backup
+
+**.lock.**
