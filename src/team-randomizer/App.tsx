@@ -114,9 +114,27 @@ const App: React.FC = () => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const text = e.target?.result as string;
-      let importedNames = text.split(/[\n,]/).map(name => name.trim()).filter(Boolean);
+      const lines = text.split('\n').filter(line => line.trim() !== '');
+      const header = lines.shift()?.toLowerCase().split(',').map(h => h.trim());
       
-      const newPlayers: Player[] = importedNames.map(name => ({ name, skill: 50 }));
+      if (!header || !header.includes('name') || !header.includes('rating')) {
+          setError('Invalid CSV format. Header must include "Name" and "Rating".');
+          return;
+      }
+
+      const nameIndex = header.indexOf('name');
+      const ratingIndex = header.indexOf('rating');
+
+      const newPlayers: Player[] = lines.map(line => {
+          const values = line.split(',');
+          const name = values[nameIndex]?.trim();
+          const rating = parseInt(values[ratingIndex]?.trim(), 10);
+          
+          if (name && !isNaN(rating)) {
+              return { name, skill: rating };
+          }
+          return null;
+      }).filter((player): player is Player => player !== null);
 
       if (removeDuplicates) {
         const lowerCaseNames = names.map(p => p.name.toLowerCase());
@@ -174,9 +192,9 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-slate-900 font-sans p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         <header className="text-center mb-8">
-          <h2 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-500">
-            Team Randomizer
-          </h2>
+          <h3 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-500">
+            Last Pick
+          </h3>
         </header>
 
         <main className="grid grid-cols-1 lg:grid-cols-2 lg:gap-8">
