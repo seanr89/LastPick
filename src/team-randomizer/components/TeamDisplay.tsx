@@ -6,7 +6,7 @@ import { Download, Users } from './Icons';
 
 interface TeamDisplayProps {
   teams: Team[];
-  onExport: () => void;
+  onExport: (team?: Team) => void;
 }
 
 const TeamDisplay: React.FC<TeamDisplayProps> = ({ teams, onExport }) => {
@@ -17,7 +17,7 @@ const TeamDisplay: React.FC<TeamDisplayProps> = ({ teams, onExport }) => {
           2. Results
         </h2>
         {teams.length > 0 && (
-          <IconButton onClick={onExport} icon={<Download className="h-5 w-5"/>} text="Export to CSV" />
+          <IconButton onClick={() => onExport()} icon={<Download className="h-5 w-5"/>} text="Export All Teams" />
         )}
       </div>
 
@@ -55,6 +55,9 @@ const TeamDisplay: React.FC<TeamDisplayProps> = ({ teams, onExport }) => {
                     </li>
                   ))}
                 </ul>
+                <div className="mt-4">
+                  <IconButton onClick={() => onExport(team)} icon={<Download className="h-4 w-4"/>} text="Export Team" />
+                </div>
               </div>
             )
           })}

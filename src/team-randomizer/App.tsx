@@ -161,15 +161,18 @@ const App: React.FC = () => {
     fileInputRef.current?.click();
   };
 
-  const handleExport = () => {
+  const handleExport = (teamToExport?: Team) => {
     clearMessages();
-    if (teams.length === 0) {
+    const teamsToExport = teamToExport ? [teamToExport] : teams;
+    const isSingleTeam = !!teamToExport;
+
+    if (teamsToExport.length === 0) {
       setError('No teams to export. Please generate teams first.');
       return;
     }
 
     let csvContent = 'Team Name,Member Name,Skill\n';
-    teams.forEach(team => {
+    teamsToExport.forEach(team => {
       team.members.forEach(member => {
         const teamName = `"${team.name.replace(/"/g, '""')}"`;
         const memberName = `"${member.name.replace(/"/g, '""')}"`;
@@ -181,11 +184,14 @@ const App: React.FC = () => {
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
-    link.setAttribute('download', 'teams.csv');
+    
+    const fileName = isSingleTeam && teamToExport ? `${teamToExport.name.replace(/[^a-zA-Z0-9_\-]/g, '_')}.csv` : 'teams.csv';
+    link.setAttribute('download', fileName);
+    
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    setSuccess('Teams exported successfully.');
+    setSuccess(`Successfully exported ${fileName}.`);
   };
 
   return (
