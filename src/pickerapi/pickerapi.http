@@ -1,0 +1,6 @@
+@pickerapi_HostAddress = http://localhost:5230
+
+GET {{pickerapi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

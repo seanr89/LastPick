@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "8ys6NLqvSOg=",
+  "success": true,
+  "projectFilePath": "/Users/seanrafferty/Documents/development/repos/LastPick/src/pickerapi/pickerapi.csproj",
+  "expectedPackageFiles": [
+    "/Users/seanrafferty/.nuget/packages/microsoft.aspnetcore.openapi/9.0.1/microsoft.aspnetcore.openapi.9.0.1.nupkg.sha512",
+    "/Users/seanrafferty/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
