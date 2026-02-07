@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=pickeruser
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_DB=pickerdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  pickerapi:
+    build: .
+    restart: always
+    ports:
+      - "8080:5230"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=pickerdb;Username=pickeruser;Password=mysecretpassword
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
